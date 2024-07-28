@@ -3,15 +3,18 @@ import React from 'react';
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
   return (
     // header section added
-    <header className='h-16 shadow-lg'>
+    <header className='h-16 shadow-lg bg-white'>
       <div className='h-full container mx-auto flex items-center px-4 justify-between'>
         <div className=''>
-          <span w={90} h={50} className='text-3xl font-bold'>O<a className=''>A</a>I <a className='text-lime-500 '> Mart</a></span>
+          <Link to="/" >
+            <span w={90} h={50} className='text-3xl font-bold'>O<a className=''>A</a>I <a className='text-lime-500 '> Mart</a></span>
+          </Link>
           {/* <Logo w={100} h={60}/> */}
         </div>
         {/* search button hidden */}
@@ -35,7 +38,7 @@ const Header = () => {
           </div>
 
           <div className='' >
-            <button className='px-3 py-1 rounded-lg bg-lime-500 text-white hover:bg-lime-600'>Login</button>
+            <Link to="/login" className='px-3 py-1 rounded-xl bg-lime-500 text-white hover:bg-lime-600'>Login</Link>
           </div>
         </div>
 
