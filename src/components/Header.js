@@ -7,6 +7,7 @@ import { FaShoppingCart } from "react-icons/fa";
 
 const Header = () => {
   return (
+    // header section added
     <header className='h-16 shadow-lg'>
       <div className='h-full container mx-auto flex items-center px-4 justify-between'>
         <div className=''>
