@@ -1,11 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <div>
-
-
+    <div className=''>
       <footer class="bg-white dark:bg-gray-900">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div class="md:flex md:justify-between">
@@ -101,4 +99,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footer;
