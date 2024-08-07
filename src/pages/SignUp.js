@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import loginIcons from '../assest/sigin.gif';
+import loginIcons from '../assest/signin.gif';
 import { Link } from 'react-router-dom';
 
 const SignUp = () => {
@@ -25,6 +25,11 @@ const SignUp = () => {
         })
     }
 
+    const handleUploadPic = (e) =>{
+        const file = e.target.files[0]
+        console.log('sobi', file)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
     }
@@ -33,8 +38,19 @@ const SignUp = () => {
         <section id='signup'>
             <div className='container mx-auto p-4'>
                 <div className='bg-white p-5 w-full max-w-sm mx-auto '>
-                    <div className='w-20 h-20 mx-auto'>
-                        <img src={loginIcons} alt='login icons' />
+                    <div className='w-20 h-20 mx-auto relative overflow-hidden rounded-full'>
+                        <div className=''>
+                            <img src={loginIcons} alt='login icons' />
+                        </div>
+                        <form className=''>
+                            <label>
+                                <div className='text-xs bg-slate-200 pb-4 pt-2 cursor-pointer text-center absolute bottom-0 w-full bg-opacity-80'>
+                                    upload photo
+                                </div>
+                                <input type='file'  className='hidden' onChange={handleUploadPic}/>
+                            </label>
+
+                        </form>
                     </div>
                     <form className='pt-6 flex flex-col gap-2' onSubmit={handleSubmit}>
                         <div className='grid'>

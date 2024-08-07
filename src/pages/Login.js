@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import loginIcons from '../assest/sigin.gif';
+import loginIcons from '../assest/signin.gif';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
