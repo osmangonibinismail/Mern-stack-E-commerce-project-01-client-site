@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import loginIcons from '../assest/signin.gif';
 import { Link } from 'react-router-dom';
+import imageTobase64 from '../helpers/imageTobase64';
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -25,9 +26,17 @@ const SignUp = () => {
         })
     }
 
-    const handleUploadPic = (e) =>{
+    const handleUploadPic = async(e) =>{
         const file = e.target.files[0]
-        console.log('sobi', file)
+
+        const imagePic = await imageTobase64(file)
+
+        setData((preve) => {
+            return {
+                ...preve,
+                profilePic: imagePic
+            }
+        })
     }
 
     const handleSubmit = (e) => {
@@ -40,7 +49,7 @@ const SignUp = () => {
                 <div className='bg-white p-5 w-full max-w-sm mx-auto '>
                     <div className='w-20 h-20 mx-auto relative overflow-hidden rounded-full'>
                         <div className=''>
-                            <img src={loginIcons} alt='login icons' />
+                            <img src={data?.profilePic || loginIcons} alt='login icons' />
                         </div>
                         <form className=''>
                             <label>
@@ -59,6 +68,7 @@ const SignUp = () => {
                                 <input type='text'
                                     placeholder='Enter your name'
                                     name='name'
+                                    required
                                     value={data.name}
                                     onChange={handleOnChange}
                                     className='w-full h-full outline-none bg-transparent'></input>
@@ -70,6 +80,7 @@ const SignUp = () => {
                                 <input type='email'
                                     placeholder='Enter email'
                                     name='email'
+                                    required
                                     value={data.email}
                                     onChange={handleOnChange}
                                     className='w-full h-full outline-none bg-transparent'></input>
@@ -82,6 +93,7 @@ const SignUp = () => {
                                     type={showPassword ? "text" : "password"}
                                     placeholder='Enter password'
                                     name='password'
+                                    required
                                     value={data.password}
                                     onChange={handleOnChange}
                                     className='w-full h-full outline-none bg-transparent'
@@ -108,6 +120,7 @@ const SignUp = () => {
                                     type={showConfirmPassword ? "text" : "password"}
                                     placeholder='Enter confirm password'
                                     name='confirmPassword'
+                                    required
                                     value={data.confirmPassword}
                                     onChange={handleOnChange}
                                     className='w-full h-full outline-none bg-transparent'
