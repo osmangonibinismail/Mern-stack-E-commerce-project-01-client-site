@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import loginIcons from '../assest/signin.gif';
 import { Link } from 'react-router-dom';
 import imageTobase64 from '../helpers/imageTobase64';
+import SummaryApi from '../common';
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +27,7 @@ const SignUp = () => {
         })
     }
 
-    const handleUploadPic = async(e) =>{
+    const handleUploadPic = async (e) => {
         const file = e.target.files[0]
 
         const imagePic = await imageTobase64(file)
@@ -39,8 +40,25 @@ const SignUp = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (data.password === data.confirmPassword) {
+            console.log("summaryApi.signup.url", SummaryApi.signUp.url)
+            const dataResponse = await fetch('http://localhost:8080/api/signup', {
+                method: SummaryApi.signUp.method,
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+
+            const dataApi = await dataResponse.json()
+
+            console.log("data", dataApi)
+        } else {
+            console.log("Please check password and confirm password")
+        }
     }
     console.log('data login', data)
     return (
@@ -56,7 +74,7 @@ const SignUp = () => {
                                 <div className='text-xs bg-slate-200 pb-4 pt-2 cursor-pointer text-center absolute bottom-0 w-full bg-opacity-80'>
                                     upload photo
                                 </div>
-                                <input type='file'  className='hidden' onChange={handleUploadPic}/>
+                                <input type='file' className='hidden' onChange={handleUploadPic} />
                             </label>
 
                         </form>
