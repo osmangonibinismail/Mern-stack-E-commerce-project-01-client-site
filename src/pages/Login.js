@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import loginIcons from '../assest/signin.gif';
 import { Link, useNavigate } from 'react-router-dom';
 import SummaryApi from '../common';
 import { toast } from 'react-toastify';
+import Context from '../context';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +14,8 @@ const Login = () => {
     password: ""
   })
   const navigate = useNavigate()
+  const { fetchUserDetails } = useContext(Context)
+
 
   const handleOnChange = (e) => {
     const { name, value } = e.target
@@ -25,25 +28,26 @@ const Login = () => {
     })
   }
 
-  const handleSubmit = async(e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const dataResponse = await fetch(SummaryApi.signIn.url,{
-      method : SummaryApi.signIn.method,
-      credentials : 'include',
-      headers : {
-        "content-type" : "application/json"
+    const dataResponse = await fetch(SummaryApi.signIn.url, {
+      method: SummaryApi.signIn.method,
+      credentials: 'include',
+      headers: {
+        "content-type": "application/json"
       },
-      body : JSON.stringify(data)
+      body: JSON.stringify(data)
     })
 
     const dataApi = await dataResponse.json()
 
-    if(dataApi.success){
+    if (dataApi.success) {
       toast.success(dataApi.message)
       navigate('/')
+      fetchUserDetails()
     }
-    if(dataApi.error){
+    if (dataApi.error) {
       toast.error(dataApi.message)
     }
   }
@@ -64,11 +68,11 @@ const Login = () => {
               <label>Email : </label>
               <div className='bg-slate-100 p-2'>
                 <input type='email'
-                 placeholder='Enter email'
-                 name='email'
-                 required
-                 value={data.email}
-                 onChange={handleOnChange}
+                  placeholder='Enter email'
+                  name='email'
+                  required
+                  value={data.email}
+                  onChange={handleOnChange}
                   className='w-full h-full outline-none bg-transparent'></input>
               </div>
             </div>
@@ -76,14 +80,14 @@ const Login = () => {
               <label>Password : </label>
               <div className='bg-slate-100 p-2 flex'>
                 <input
-                 type={showPassword ? "text" : "password"}
+                  type={showPassword ? "text" : "password"}
                   placeholder='Enter password'
                   name='password'
                   required
-                 value={data.password}
-                 onChange={handleOnChange}
-                 className='w-full h-full outline-none bg-transparent'
-                 ></input>
+                  value={data.password}
+                  onChange={handleOnChange}
+                  className='w-full h-full outline-none bg-transparent'
+                ></input>
                 <div className='cursor-pointer text-xl' onClick={() => setShowPassword((previous) => !previous)}>
                   <span>
                     {
