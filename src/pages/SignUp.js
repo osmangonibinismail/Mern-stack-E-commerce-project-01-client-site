@@ -68,7 +68,6 @@ const SignUp = () => {
             console.log("Please check password and confirm password")
         }
     }
-    console.log('data login', data)
     return (
         <section id='signup'>
             <div className='container mx-auto p-4'>
