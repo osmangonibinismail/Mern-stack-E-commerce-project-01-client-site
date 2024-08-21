@@ -87,11 +87,11 @@ const Header = () => {
           <div className='' >
             {
               user?._id ? (
-                <button onClick={handleLogout} className='px-3 py-1 rounded-xl bg-lime-500 text-white hover:bg-lime-600'>Logout</button>
+                <button onClick={handleLogout} className='px-3 py-1  bg-lime-500 text-white hover:bg-lime-600'>Logout</button>
               )
                 :
                 (
-                  <Link to="/login" className='px-3 py-1 rounded-xl bg-lime-500 text-white hover:bg-lime-600'>Login</Link>
+                  <Link to="/login" className='px-3 py-1  bg-lime-500 text-white hover:bg-lime-600'>Login</Link>
                 )
             }
 
