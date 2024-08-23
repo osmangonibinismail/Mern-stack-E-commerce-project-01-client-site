@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { CgClose } from "react-icons/cg";
+import { MdDelete } from "react-icons/md";
 import productCategory from '../helpers/productCategory';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from '../helpers/uploadImage';
+import DisplayImage from './DisplayImage';
 
 const UploadProduct = ({
     onClose
@@ -15,17 +17,23 @@ const UploadProduct = ({
         productImage: [],
         description: "",
         price: "",
-        selling: ""
+        sellingPrice: ""
     })
-    const [uploadProductImageInput, setUploadProductImage] = useState("")
+    const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
+    const [fullScreenImage, setFullScreenImage] = useState("")
 
     const handleOnChange = (e) => {
-
+        const { name, value } = e.target
+        setData((preve) => {
+            return {
+                ...preve,
+                [name]: value
+            }
+        })
     }
     const handleUploadProduct = async (e) => {
         const file = e.target.files[0]
-        setUploadProductImage(file.name)
-        console.log('file', file)
+
 
         const uploadImageCloudinary = await uploadImage(file)
 
@@ -35,7 +43,25 @@ const UploadProduct = ({
                 productImage: [...preve.productImage, uploadImageCloudinary.url]
             }
         })
-        console.log("upload Image", uploadImageCloudinary.url)
+    }
+    const handleDeleteProductImage = async (index) => {
+        console.log("image index", index)
+
+        const newProductImage = [...data.productImage]
+        newProductImage.splice(index, 1)
+
+        setData((preve) => {
+            return {
+                ...preve,
+                productImage: [...newProductImage]
+            }
+        })
+    }
+
+    // upload product
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        console.log("data",data)
     }
     return (
         <div className='fixed w-full h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center '>
@@ -44,18 +70,18 @@ const UploadProduct = ({
                     <h2 className='font-bold text-xl'>
                         Upload Product
                     </h2>
-                    <div className='w-fit ml-auto items-center text-2xl hover:text-lime-600 cursor-pointer hover:border-2 hover:border-black border' onClick={onClose}>
+                    <div className='w-fit ml-auto items-center text-2xl hover:text-lime-600 cursor-pointer hover:border-2  ' onClick={onClose}>
                         <CgClose />
                     </div>
                 </div>
 
-                <form className='grid p-4 gap-2 overflow-y-scroll h-full pb-5'>
+                <form className='grid p-4 gap-2 overflow-y-scroll h-full pb-5' onSubmit={handleSubmit}>
                     {/* Product Name */}
                     <label htmlFor='productName'>Product Name :</label>
                     <input
                         type='text'
                         id='productName'
-                        placeholder='Enter product name'
+                        placeholder='enter product name'
                         value={data.productName}
                         name='productName'
                         onChange={handleOnChange}
@@ -66,7 +92,7 @@ const UploadProduct = ({
                     <input
                         type='text'
                         id='brandName'
-                        placeholder='Enter brand name'
+                        placeholder='enter brand name'
                         value={data.brandName}
                         name='brandName'
                         onChange={handleOnChange}
@@ -74,7 +100,12 @@ const UploadProduct = ({
                     />
                     {/* category */}
                     <label htmlFor='category' className='mt-3'>Category :</label>
-                    <select className='p-2 bg-slate-100 border' value={data.category}>
+                    <select 
+                    name='category'
+                    onChange={handleOnChange}
+                    className='p-2 bg-slate-100 border' 
+                    value={data.category}>
+                    <option value={""} >Select Category</option>
                         {
                             productCategory.map((el, index) => {
                                 return (
@@ -99,9 +130,22 @@ const UploadProduct = ({
                             data?.productImage[0] ? (
                                 <div className='flex items-center gap-2'>
                                     {
-                                        data.productImage.map(el => {
+                                        data.productImage.map((el, index) => {
                                             return (
-                                                <img src={el} alt='el' width={80} height={80} className='bg-slate-100 border' />
+                                                <div className='relative group'>
+                                                    <img
+                                                        src={el}
+                                                        alt={el}
+                                                        width={80}
+                                                        height={80}
+                                                        className='bg-slate-100 border cursor-pointer' onClick={() => {
+                                                            setOpenFullScreenImage(true)
+                                                            setFullScreenImage(el)
+                                                        }} />
+                                                    <div className='absolute bottom-0 right-0 text-white bg-red-600 rounded-full p-1 hidden group-hover:block cursor-pointer' onClick={() => handleDeleteProductImage(index)}>
+                                                        <MdDelete />
+                                                    </div>
+                                                </div>
                                             )
                                         })
                                     }
@@ -113,9 +157,51 @@ const UploadProduct = ({
 
                     </div>
 
+
+                    {/* Price */}
+                    <label htmlFor='price' className='mt-3'>Price :</label>
+                    <input
+                        type='number'
+                        id='price'
+                        placeholder='enter price'
+                        value={data.price}
+                        name='price'
+                        onChange={handleOnChange}
+                        className='p-2 bg-slate-100 border'
+                    />
+                    {/* selling Price */}
+                    <label htmlFor='sellingPrice' className='mt-3'>Selling Price :</label>
+                    <input
+                        type='number'
+                        id='sellingPrice'
+                        placeholder='enter selling price'
+                        value={data.sellingPrice}
+                        name='sellingPrice'
+                        onChange={handleOnChange}
+                        className='p-2 bg-slate-100 border'
+                    />
+                    {/* Description */}
+                    <label htmlFor='description' className='mt-3'>Description :</label>
+                    <textarea
+                        rows={3}
+                        className='p-2 h-28 resize-none bg-slate-100 border' placeholder='enter product description'
+                        onChange={handleOnChange}
+                        name='description'
+                        >
+
+                    </textarea>
+                    
+
                     <button className=' mb-10 px-3 py-2 bg-lime-500 text-white hover:bg-lime-600'>Upload product</button>
                 </form>
             </div>
+
+            {/* display image full screen */}
+            {
+                openFullScreenImage && (
+                    <DisplayImage onClose={() => setOpenFullScreenImage(false)} imgUrl={fullScreenImage} />
+                )
+            }
         </div>
     )
 }
