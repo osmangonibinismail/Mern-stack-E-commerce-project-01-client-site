@@ -8,18 +8,23 @@ import DisplayImage from './DisplayImage';
 import SummaryApi from '../common';
 import {toast} from 'react-toastify';
 
-const UploadProduct = ({
-    onClose
+
+const AdminEditProduct = ({
+    onClose,
+    productData,
+    fetchData
 }) => {
 
+    // copy
     const [data, setData] = useState({
-        productName: "",
-        brandName: "",
-        category: "",
-        productImage: [],
-        description: "",
-        price: "",
-        sellingPrice: ""
+        ...productData,
+        productName: productData?.productName,
+        brandName: productData?.brandName,
+        category: productData?.category,
+        productImage: productData?.productImage || [],
+        description: productData?.description,
+        price: productData?.price,
+        sellingPrice: productData?.sellingPrice,
     })
     const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
     const [fullScreenImage, setFullScreenImage] = useState("")
@@ -61,26 +66,27 @@ const UploadProduct = ({
     }
 
     // upload product
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const response = await fetch(SummaryApi.uploadProduct.url,{
-            method : SummaryApi.uploadProduct.method,
-            credentials : 'include',
-            headers : {
-                "content-type" : "application/json"
+        const response = await fetch(SummaryApi.updateProduct.url, {
+            method: SummaryApi.updateProduct.method,
+            credentials: 'include',
+            headers: {
+                "content-type": "application/json"
             },
-            body : JSON.stringify(data)
+            body: JSON.stringify(data)
         })
 
         const responseData = await response.json()
 
-        if(responseData.success){
+        if (responseData.success) {
             toast.success(responseData?.message)
             onClose()
+            fetchData()
         }
 
-        if(responseData.error){
+        if (responseData.error) {
             toast.error(responseData?.message)
         }
 
@@ -90,7 +96,7 @@ const UploadProduct = ({
             <div className='bg-white p-2 rounded w-full max-w-2xl h-full max-h-[75%] overflow-hidden '>
                 <div className='flex justify-between items-center pb-3'>
                     <h2 className='font-bold text-2xl text-gray-900'>
-                        Upload Product
+                        Edit Product
                     </h2>
                     <div className='w-fit ml-auto items-center text-2xl hover:text-lime-600 cursor-pointer hover:border-2  ' onClick={onClose}>
                         <CgClose />
@@ -220,7 +226,7 @@ const UploadProduct = ({
                     </textarea>
 
 
-                    <button className=' mb-10 px-3 py-2 bg-lime-500 text-white hover:bg-lime-600'>Upload product</button>
+                    <button className=' mb-10 px-3 py-2 bg-lime-500 text-white hover:bg-lime-600'>Update product</button>
                 </form>
             </div>
 
@@ -234,4 +240,4 @@ const UploadProduct = ({
     )
 }
 
-export default UploadProduct
+export default AdminEditProduct
