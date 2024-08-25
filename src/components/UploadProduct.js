@@ -5,6 +5,8 @@ import productCategory from '../helpers/productCategory';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from '../helpers/uploadImage';
 import DisplayImage from './DisplayImage';
+import SummaryApi from '../common';
+import {toast} from 'react-toastify';
 
 const UploadProduct = ({
     onClose
@@ -59,9 +61,29 @@ const UploadProduct = ({
     }
 
     // upload product
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        console.log("data",data)
+
+        const response = await fetch(SummaryApi.uploadProduct.url,{
+            method : SummaryApi.uploadProduct.method,
+            credentials : 'include',
+            headers : {
+                "content-type" : "application/json"
+            },
+            body : JSON.stringify(data)
+        })
+
+        const responseData = await response.json()
+
+        if(responseData.success){
+            toast.success(responseData?.message)
+            onClose()
+        }
+
+        if(responseData.error){
+            toast.error(responseData?.message)
+        }
+
     }
     return (
         <div className='fixed w-full h-full bg-slate-200 bg-opacity-35 top-0 left-0 right-0 bottom-0 flex justify-center items-center '>
@@ -86,6 +108,7 @@ const UploadProduct = ({
                         name='productName'
                         onChange={handleOnChange}
                         className='p-2 bg-slate-100 border'
+                        required
                     />
                     {/* Brand Name */}
                     <label htmlFor='brandName' className='mt-3'>Brand Name :</label>
@@ -97,15 +120,17 @@ const UploadProduct = ({
                         name='brandName'
                         onChange={handleOnChange}
                         className='p-2 bg-slate-100 border'
+                        required
                     />
                     {/* category */}
                     <label htmlFor='category' className='mt-3'>Category :</label>
-                    <select 
-                    name='category'
-                    onChange={handleOnChange}
-                    className='p-2 bg-slate-100 border' 
-                    value={data.category}>
-                    <option value={""} >Select Category</option>
+                    <select
+                        required
+                        name='category'
+                        onChange={handleOnChange}
+                        className='p-2 bg-slate-100 border'
+                        value={data.category}>
+                        <option value={""} >Select Category</option>
                         {
                             productCategory.map((el, index) => {
                                 return (
@@ -168,6 +193,7 @@ const UploadProduct = ({
                         name='price'
                         onChange={handleOnChange}
                         className='p-2 bg-slate-100 border'
+                        required
                     />
                     {/* selling Price */}
                     <label htmlFor='sellingPrice' className='mt-3'>Selling Price :</label>
@@ -179,6 +205,7 @@ const UploadProduct = ({
                         name='sellingPrice'
                         onChange={handleOnChange}
                         className='p-2 bg-slate-100 border'
+                        required
                     />
                     {/* Description */}
                     <label htmlFor='description' className='mt-3'>Description :</label>
@@ -187,10 +214,10 @@ const UploadProduct = ({
                         className='p-2 h-28 resize-none bg-slate-100 border' placeholder='enter product description'
                         onChange={handleOnChange}
                         name='description'
-                        >
+                    >
 
                     </textarea>
-                    
+
 
                     <button className=' mb-10 px-3 py-2 bg-lime-500 text-white hover:bg-lime-600'>Upload product</button>
                 </form>
