@@ -12,7 +12,7 @@ const AdminProductCard = ({
     return (
         <div className='bg-white p-4 rounded-xm shadow-2xl'>
             <div className='w-40'>
-                <div className='w-32 h-32 flex justify-center items-center '>
+                <div className='w-32 h-36 flex justify-center items-center '>
                     <img src={data?.productImage[0]} width={120} height={120} className='object-fill mx-auto h-full' />
                 </div>
                 <h1 className='mt-2 font-medium text-ellipsis line-clamp-2'>{data?.productName}</h1>
