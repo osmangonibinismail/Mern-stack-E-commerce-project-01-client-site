@@ -9,6 +9,7 @@ const Home = () => {
       <CategoryList />
       <BannerProduct />
       <HorizontalCardProduct category={"airpodes"} heading={"Top's Airpodes"}/>
+      <HorizontalCardProduct category={"Speakers"} heading={"Popular Refrigerator"}/>
     </div>
   )
 }
