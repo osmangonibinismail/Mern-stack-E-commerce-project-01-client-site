@@ -11,7 +11,7 @@ const productCategory = [
     {id : 10, label : "Speakers", value : "Speakers"},
     {id : 11, label : "Trimers", value : "Trimers"},
     {id : 12, label : "Televisions", value : "Televisions"},
-    {id : 12, label : "Laptop", value : "laptop"},
+    {id : 13, label : "Laptop", value : "laptop"},
 ]
 
 export default productCategory

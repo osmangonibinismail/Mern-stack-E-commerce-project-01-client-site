@@ -7,7 +7,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
-    const loadingList = new Array(13).fill(null)
+    const loadingList = new Array(15).fill(null)
 
     const [scroll,setScroll] = useState(0)
     const scrollElement = useRef()
