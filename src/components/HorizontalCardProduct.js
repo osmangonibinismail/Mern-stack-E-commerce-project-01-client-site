@@ -6,10 +6,10 @@ import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
 const HorizontalCardProduct = ({ category, heading }) => {
 
     const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const loadingList = new Array(15).fill(null)
 
-    const [scroll,setScroll] = useState(0)
+    const [scroll, setScroll] = useState(0)
     const scrollElement = useRef()
 
     const fetchData = async () => {
@@ -26,10 +26,10 @@ const HorizontalCardProduct = ({ category, heading }) => {
         fetchData()
     }, [])
 
-    const scrollRight = () =>{
+    const scrollRight = () => {
         scrollElement.current.scrollLeft += 300
     }
-    const scrollLeft = () =>{
+    const scrollLeft = () => {
         scrollElement.current.scrollLeft -= 300
     }
     return (
@@ -38,9 +38,30 @@ const HorizontalCardProduct = ({ category, heading }) => {
             <h2 className='text-2xl font-semibold py-4'>{heading}</h2>
 
             <div className='flex items-center gap-4 md:gap-6 overflow-scroll scrollbar-none transition-all' ref={scrollElement}>
-                <button  className='bg-white shadow-md rounded-full p-1 absolute left-0 text-lg hidden md:block' onClick={scrollLeft}><FaAngleLeft /></button>
-                <button  className='bg-white shadow-md rounded-full p-1 absolute right-0 text-lg hidden md:block' onClick={scrollRight}><FaAngleRight /></button>
-                {
+                <button className='bg-white shadow-md rounded-full p-1 absolute left-0 text-lg hidden md:block' onClick={scrollLeft}><FaAngleLeft /></button>
+                <button className='bg-white shadow-md rounded-full p-1 absolute right-0 text-lg hidden md:block' onClick={scrollRight}><FaAngleRight /></button>
+                {loading ? (
+                    loadingList.map((product, index) => {
+                        return (
+                            <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white shadow rounded-sm flex'>
+                                <div className='bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] animate-pulse'>
+                                    
+                                </div>
+                                <div className='p-4 grid w-full gap-2 '>
+                                    <h2 className='font-medium md:text-lg text-base text-ellipsis line-clamp-1 text-black bg-slate-200 p-1 animate-pulse rounded-full'>
+                                        
+                                    </h2>
+                                    <p className='capitalize text-slate-600 p-1 bg-slate-200 animate-pulse rounded-full'></p>
+                                    <div className='flex gap-3 w-full'>
+                                        <p className='text-lime-600 font-medium p-1 bg-slate-200  w-full animate-pulse rounded-full'></p>
+                                        <p className='text-slate-600 line-through p-1 bg-slate-200 w-full animate-pulse rounded-full'></p>
+                                    </div>
+                                    <button className='text-sm  text-white px-3 py-0.5 animate-pulse rounded-full w-full bg-slate-200'></button>
+                                </div>
+                            </div>
+                        )
+                    })
+                ) : (
                     data.map((product, index) => {
                         return (
                             <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white shadow rounded-sm flex'>
@@ -61,6 +82,8 @@ const HorizontalCardProduct = ({ category, heading }) => {
                             </div>
                         )
                     })
+                )
+
                 }
 
             </div>

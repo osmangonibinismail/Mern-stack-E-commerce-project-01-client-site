@@ -10,7 +10,7 @@ import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
 const VerticalCardProduct = ({ category, heading }) => {
 
     const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const loadingList = new Array(13).fill(null)
 
     const [scroll,setScroll] = useState(0)
@@ -45,26 +45,50 @@ const VerticalCardProduct = ({ category, heading }) => {
                 <button  className='bg-white shadow-md rounded-full p-1 absolute left-0 text-lg hidden md:block' onClick={scrollLeft}><FaAngleLeft /></button>
                 <button  className='bg-white shadow-md rounded-full p-1 absolute right-0 text-lg hidden md:block' onClick={scrollRight}><FaAngleRight /></button>
                 {
-                    data.map((product, index) => {
-                        return (
-                            <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white shadow rounded-sm '>
-                                <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center'>
-                                    <img src={product?.productImage[0]} className='object-scale-down h-full hover:scale-125 transition-all mix-blend-multiply' />
-                                </div>
-                                <div className='p-4 grid gap-3'>
-                                    <h2 className='font-medium md:text-lg text-base text-ellipsis line-clamp-1 text-black'>
-                                        {product?.productName}
-                                    </h2>
-                                    <p className='capitalize text-slate-600'>{product?.category}</p>
-                                    <div className='flex gap-3'>
-                                        <p className='text-lime-600 font-medium'>{displayINRCurrency(product?.sellingPrice)}</p>
-                                        <p className='text-slate-600 line-through'>{displayINRCurrency(product?.price)}</p>
+                    loading ? (
+                        loadingList.map((product, index) => {
+                            return (
+                                <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white shadow rounded-sm '>
+                                    <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse'>
                                     </div>
-                                    <button className='text-sm bg-lime-500 hover:bg-lime-600 text-white px-3 py-0.5 rounded-full'>Add to Cart</button>
+                                    <div className='p-4 grid gap-3'>
+                                        <h2 className='font-medium md:text-lg text-base text-ellipsis line-clamp-1 text-black p-1 animate-pulse rounded-full bg-slate-200 py-2'>
+                                            
+                                        </h2>
+                                        <p className='capitalize text-slate-600  p-1 animate-pulse rounded-full bg-slate-200 py-2'></p>
+                                        <div className='flex gap-3'>
+                                            <p className='text-lime-600 font-medium p-1 animate-pulse rounded-full bg-slate-200 w-full py-2'></p>
+                                            <p className='text-slate-600 line-through p-1 animate-pulse rounded-full bg-slate-200 w-full py-2'></p>
+                                        </div>
+                                        <button className='text-sm  text-white px-3 py-2 rounded-full bg-slate-200 animate-pulse'></button>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })
+                            )
+                        })
+                    ) : (
+                        data.map((product, index) => {
+                            return (
+                                <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px]  bg-white shadow rounded-sm '>
+                                    <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center'>
+                                        <img src={product?.productImage[0]} className='object-scale-down h-full hover:scale-125 transition-all mix-blend-multiply' />
+                                    </div>
+                                    <div className='p-4 grid gap-3'>
+                                        <h2 className='font-medium md:text-lg text-base text-ellipsis line-clamp-1 text-black'>
+                                            {product?.productName}
+                                        </h2>
+                                        <p className='capitalize text-slate-600'>{product?.category}</p>
+                                        <div className='flex gap-3'>
+                                            <p className='text-lime-600 font-medium'>{displayINRCurrency(product?.sellingPrice)}</p>
+                                            <p className='text-slate-600 line-through'>{displayINRCurrency(product?.price)}</p>
+                                        </div>
+                                        <button className='text-sm bg-lime-500 hover:bg-lime-600 text-white px-3 py-0.5 rounded-full'>Add to Cart</button>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    )
+
+                    
                 }
 
             </div>
