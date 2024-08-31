@@ -43,10 +43,10 @@ const Header = () => {
   return (
     // header section added
     <header className='h-16 shadow-lg bg-white fixed z-40 w-full'>
-      <div className='h-full container mx-auto flex items-center px-4 justify-between'>
+      <div className='h-full container mx-auto flex items-center pl-1 lg:pl-4 md:pl-4 pr-2 lg:pr-4 md:pr-4 justify-between'>
         <div className=''>
           <Link to="/" >
-            <span w={90} h={50} className='text-3xl font-bold'>O<a className=''>A</a>I <a className='text-lime-500 '> Mart</a></span>
+            <span w={90} h={50} className='text-3xl lg:text-4xl md:text-4xl font-extrabold lg:font-bold md:font-bold'>OAI <a className='text-lime-500 '> Mart</a></span>
           </Link>
           {/* <Logo w={100} h={60}/> */}
         </div>
@@ -59,7 +59,7 @@ const Header = () => {
         </div>
 
         {/* register icon and cart icon set up */}
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-4 lg:gap-6 md:gap-6'>
           <div className='relative  flex justify-center'>
 
             {
@@ -67,7 +67,7 @@ const Header = () => {
                 <div className='text-3xl cursor-pointer relative flex justify-center' onClick={() => setMenuDisplay(preve => !preve)}>
                   {
                     user?.profilePic ? (
-                      <img src={user?.profilePic} className='w-9 h-9 rounded-full' alt={user?.name} />
+                      <img src={user?.profilePic} className='w-8 h-8 md:w-9 md:h-9 rounded-full' alt={user?.name} />
                     ) : (
                       <FaRegCircleUser />
                     )
@@ -93,12 +93,12 @@ const Header = () => {
           </div>
           {
             user?._id && (
-              <div className='text-2xl relative'>
+              <Link to={"/cart"} className='text-2xl relative'>
                 <FaShoppingCart />
-                <div className='bg-lime-500 text-white w-5 h-5 p-1 rounded-full flex items-center justify-center absolute -top-2 -right-3'>
+                <div className='bg-lime-500 text-white w-5 h-5  p-1 rounded-full flex items-center justify-center absolute -top-2 -right-3'>
                   <span className='text-xs'>{context?.cartProductCount}</span>
                 </div>
-              </div>
+              </Link >
             )
           }
 
