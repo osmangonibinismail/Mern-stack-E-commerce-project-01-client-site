@@ -60,7 +60,15 @@ const SummaryApi = {
     addToCardProductView : {
         url : `${backendDomain}/api/view-card-product`,
         method : "get"
-    }
+    },
+    updateCardProduct : {
+        url : `${backendDomain}/api/update-card-product`,
+        method : "post"
+    },
+    deleteCardProduct : {
+        url : `${backendDomain}/api/delete-cart-product`,
+        method : "post"
+    },
 }
 
 export default SummaryApi
