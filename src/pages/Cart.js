@@ -78,7 +78,7 @@ const Cart = () => {
         }
     }
 
-    const deleteCardProduct = async(id)=>{
+    const deleteCardProduct = async (id) => {
         const response = await fetch(SummaryApi.deleteCardProduct.url, {
             method: SummaryApi.deleteCardProduct.method,
             credentials: 'include',
@@ -99,6 +99,13 @@ const Cart = () => {
             context.fetchUserAddToCart()
         }
     }
+
+    const totalQty = data.reduce((previousValue, currentValue) => {
+        return previousValue + currentValue.quantity;
+    }, 0);
+    const totalPrice = data.reduce((prev, curr) => {
+        return prev + (curr.quantity * (curr?.productId?.sellingPrice || 0));
+    }, 0)
 
     return (
         <div className='container mx-auto'>
@@ -129,12 +136,15 @@ const Cart = () => {
                                         </div>
                                         <div className='px-4 py-2 relative'>
                                             {/* delete product*/}
-                                            <div className='absolute right-0 text-lime-600 hover:bg-lime-600 hover:text-white rounded-full p-2 cursor-pointer' onClick={()=>deleteCardProduct(product?._id)}>
+                                            <div className='absolute right-0 text-lime-600 hover:bg-lime-600 hover:text-white rounded-full p-2 cursor-pointer' onClick={() => deleteCardProduct(product?._id)}>
                                                 <MdDelete />
                                             </div>
                                             <h2 className='text-lg lg:text-xl text-ellipsis line-clamp-1'>{product?.productId?.productName}</h2>
                                             <p className='capitalize text-slate-500 text-ellipsis line-clamp-1'>{product?.productId?.category}</p>
-                                            <p className='text-lime-600 font-medium text-lg'>{displayINRCurrency(product?.productId?.sellingPrice)}</p>
+                                            <div className='flex items-center justify-between'>
+                                                <p className='text-lime-600 font-medium text-lg'>{displayINRCurrency(product?.productId?.sellingPrice)}</p>
+                                                <p className='text-slate-600 font-semibold text-lg'>{displayINRCurrency(product?.productId?.sellingPrice * product?.quantity)}</p>
+                                            </div>
                                             <div className='flex items-center gap-3 mt-1'>
                                                 <button className='border border-lime-600 text-lime-600 hover:bg-lime-500 hover:text-white flex justify-center items-center w-6 h-6 rounded' onClick={() => decreaseQty(product?._id, product?.quantity)}>-</button>
                                                 <span>{product?.quantity}</span>
@@ -154,11 +164,20 @@ const Cart = () => {
                     {
                         loading ? (
                             <div className='h-36 bg-slate-200 border border-slate-300 animate-pulse'>
-                                Total
+
                             </div>
                         ) : (
-                            <div className='h-36 bg-slate-200'>
-                                Total
+                            <div className='h-36 bg-white'>
+                                <h2 className='text-white bg-lime-600 px-4 py-1'>Summary</h2>
+                                <div className='flex items-center justify-between px-4 font-medium text-lg text-slate-600 gap-2 mt-4'>
+                                    <p>Quantity</p>
+                                    <p>{totalQty}</p>
+                                </div>
+                                <div className='flex items-center justify-between px-4 font-medium text-lg text-slate-600 gap-2 mt-1'>
+                                    <p>Total Price</p>
+                                    <p>{displayINRCurrency(totalPrice)}</p>
+                                </div>
+                                <button className='bg-emerald-600 hover:bg-emerald-700 text-white w-full p-2 mt-4'>Payment</button>
                             </div>
                         )
                     }
