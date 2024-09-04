@@ -3,6 +3,7 @@ import SummaryApi from '../common'
 import Context from '../context'
 import displayINRCurrency from '../helpers/displayCurrency'
 import { MdDelete } from "react-icons/md";
+import { loadStripe } from '@stripe/stripe-js';
 
 const Cart = () => {
     const [data, setData] = useState([])
@@ -21,6 +22,7 @@ const Cart = () => {
         })
 
         const responseData = await response.json()
+
 
         if (responseData.success) {
             setData(responseData.data)
@@ -106,18 +108,34 @@ const Cart = () => {
     }
 
     const handlePayment = async () => {
-        const response = await fetch(SummaryApi.payment.url,{
-            method : SummaryApi.payment.method,
-            credentials : 'include',
+
+        const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+
+        if (!stripe) {
+            console.error("Stripe failed to initialize.");
+            return;
+        }
+
+        const response = await fetch(SummaryApi.payment.url, {
+            method: SummaryApi.payment.method,
+            credentials: 'include',
             headers: {
-                "content-type" : 'application/json'
+                "content-type": 'application/json'
             },
-            body : JSON.stringify({
-                cartItems : data
+            body: JSON.stringify({
+                cartItems: data
             })
         })
 
         const responseData = await response.json()
+
+        if (responseData?.id) {
+            const { error } = await stripe.redirectToCheckout({ sessionId: responseData.id });
+    
+            if (error) {
+                console.error("Error redirecting to checkout:", error);
+            }
+        }
 
         console.log("payment response", responseData)
     }
