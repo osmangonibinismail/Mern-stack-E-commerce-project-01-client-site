@@ -11,7 +11,7 @@ const Cart = () => {
     const loadingCart = new Array(context.cartProductCount).fill(null)
 
     const fetchData = async () => {
-        
+
         const response = await fetch(SummaryApi.addToCardProductView.url, {
             method: SummaryApi.addToCardProductView.method,
             credentials: 'include',
@@ -27,7 +27,7 @@ const Cart = () => {
         }
     }
 
-    const handleLoading = async() =>{
+    const handleLoading = async () => {
         await fetchData()
     }
 
@@ -105,6 +105,23 @@ const Cart = () => {
         }
     }
 
+    const handlePayment = async () => {
+        const response = await fetch(SummaryApi.payment.url,{
+            method : SummaryApi.payment.method,
+            credentials : 'include',
+            headers: {
+                "content-type" : 'application/json'
+            },
+            body : JSON.stringify({
+                cartItems : data
+            })
+        })
+
+        const responseData = await response.json()
+
+        console.log("payment response", responseData)
+    }
+
     const totalQty = data.reduce((previousValue, currentValue) => {
         return previousValue + currentValue.quantity;
     }, 0);
@@ -126,9 +143,9 @@ const Cart = () => {
                 <div className='w-full max-w-3xl'>
                     {
                         loading ? (
-                            loadingCart.map((el,index) => {
+                            loadingCart.map((el, index) => {
                                 return (
-                                    <div key={el + "Add to Cart Loading"+index} className='w-full bg-slate-200 h-32 my-2 border border-slate-300 animate-pulse rounded'>
+                                    <div key={el + "Add to Cart Loading" + index} className='w-full bg-slate-200 h-32 my-2 border border-slate-300 animate-pulse rounded'>
                                     </div>
                                 )
                             })
@@ -165,28 +182,33 @@ const Cart = () => {
 
 
                 {/* summary */}
-                <div className='mt-5 lg:mt-0 w-full max-w-sm'>
-                    {
-                        loading ? (
-                            <div className='h-36 bg-slate-200 border border-slate-300 animate-pulse'>
+                {
+                    data[0] && (
+                        <div className='mt-5 lg:mt-0 w-full max-w-sm'>
+                            {
+                                loading ? (
+                                    <div className='h-36 bg-slate-200 border border-slate-300 animate-pulse'>
 
-                            </div>
-                        ) : (
-                            <div className='h-36 bg-white'>
-                                <h2 className='text-white bg-lime-600 px-4 py-1'>Summary</h2>
-                                <div className='flex items-center justify-between px-4 font-medium text-lg text-slate-600 gap-2 mt-4'>
-                                    <p>Quantity</p>
-                                    <p>{totalQty}</p>
-                                </div>
-                                <div className='flex items-center justify-between px-4 font-medium text-lg text-slate-600 gap-2 mt-1'>
-                                    <p>Total Price</p>
-                                    <p>{displayINRCurrency(totalPrice)}</p>
-                                </div>
-                                <button className='bg-emerald-600 hover:bg-emerald-700 text-white w-full p-2 mt-4'>Payment</button>
-                            </div>
-                        )
-                    }
-                </div>
+                                    </div>
+                                ) : (
+                                    <div className='h-36 bg-white'>
+                                        <h2 className='text-white bg-lime-600 px-4 py-1'>Summary</h2>
+                                        <div className='flex items-center justify-between px-4 font-medium text-lg text-slate-600 gap-2 mt-4'>
+                                            <p>Quantity</p>
+                                            <p>{totalQty}</p>
+                                        </div>
+                                        <div className='flex items-center justify-between px-4 font-medium text-lg text-slate-600 gap-2 mt-1'>
+                                            <p>Total Price</p>
+                                            <p>{displayINRCurrency(totalPrice)}</p>
+                                        </div>
+                                        <button className='bg-emerald-600 hover:bg-emerald-700 text-white w-full p-2 mt-4' onClick={handlePayment}>Payment</button>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    )
+                }
+
             </div>
 
         </div>
