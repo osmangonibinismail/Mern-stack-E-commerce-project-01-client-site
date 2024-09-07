@@ -219,7 +219,7 @@ const Cart = () => {
                                             <p>Total Price</p>
                                             <p>{displayINRCurrency(totalPrice)}</p>
                                         </div>
-                                        <button className='bg-emerald-600 hover:bg-emerald-700 text-white w-full p-2 mt-4' onClick={handlePayment}>Payment</button>
+                                        <button className='bg-emerald-600 hover:bg-emerald-700 text-white w-full p-2 mt-4 mb-4' onClick={handlePayment}>Payment</button>
                                     </div>
                                 )
                             }

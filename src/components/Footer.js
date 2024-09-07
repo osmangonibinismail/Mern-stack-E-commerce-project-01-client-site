@@ -10,7 +10,7 @@ const Footer = () => {
             <div class="mb-6 md:mb-0">
               <div className=''>
                 <Link to="/" >
-                  <span w={90} h={50} className='text-3xl font-bold'>O<a className=''>A</a>I <a className='text-lime-500 '> Mart</a></span>
+                  <span w={90} h={50} className='text-3xl font-bold '> <a className='dark:text-white'>OAI </a><a className='text-lime-500 '> Mart</a></span>
                 </Link>
                 {/* <Logo w={100} h={60}/> */}
               </div>
@@ -54,7 +54,7 @@ const Footer = () => {
           <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div class="sm:flex sm:items-center sm:justify-between">
             <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <Link to="/" >
-              <a class="hover:underline"><span className='dark:text-white'>OAI</span> Mart</a>
+              <a class="hover:underline"><span className=''>OAI</span> Mart</a>
             </Link>. All Rights Reserved.
             </span><div className=''>
 
