@@ -126,7 +126,7 @@ const Header = () => {
               )
                 :
                 (
-                  <Link to="/login" className='px-3 py-1  bg-lime-500 text-white hover:bg-lime-600'>Login</Link>
+                  <Link to="/login" className='px-3 py-2  bg-lime-500 text-white hover:bg-lime-600'>Login</Link>
                 )
             }
 
