@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import img1 from '../assest/banner/test1.webp'
-import img2 from '../assest/banner/img2.webp'
-import img3 from '../assest/banner/img3.jpg'
-import img4 from '../assest/banner/img4.jpg'
-import img5 from '../assest/banner/img5.webp'
+import img1 from '../assests/banner/img1.webp'
+// import img1 from '../assests/banner/test1.webp'
+import img2 from '../assests/banner/img2.webp'
+import img3 from '../assests/banner/img3.jpg'
+import img4 from '../assests/banner/img4.jpg'
+import img5 from '../assests/banner/img5.webp'
 
-import imgMobile1 from '../assest/banner/img1_mobile.jpg'
-import imgMobile2 from '../assest/banner/img2_mobile.webp'
-import imgMobile3 from '../assest/banner/img3_mobile.jpg'
-import imgMobile4 from '../assest/banner/img4_mobile.jpg'
-import imgMobile5 from '../assest/banner/img5_mobile.png'
+import imgMobile1 from '../assests/banner/img1_mobile.jpg'
+import imgMobile2 from '../assests/banner/img2_mobile.webp'
+import imgMobile3 from '../assests/banner/img3_mobile.jpg'
+import imgMobile4 from '../assests/banner/img4_mobile.jpg'
+import imgMobile5 from '../assests/banner/img5_mobile.png'
 
 import { FaAngleRight } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa";
